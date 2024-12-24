@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios');
-const express = require('express');
 
 // Настройки бота
 const TOKEN = process.env.DISCORD_TOKEN; // Замените на ваш токен
@@ -97,15 +96,7 @@ client.on('messageCreate', async (message) => {
   }
 });
 
-// Имитация открытия порта
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Bot is running!');
-});
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Express server is running on port ${PORT}`);
-});
+
 
 // Запуск бота
 client.login(TOKEN);
