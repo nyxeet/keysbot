@@ -40,7 +40,7 @@ async function fetchPlayerData(player) {
     region: player.region,
     realm: player.realm,
     name: player.name,
-    fields: 'mythic_plus_weekly_highest_level_runs',
+    fields: 'mythic_plus_weekly_highest_level_runs,mythic_plus_previous_weekly_highest_level_runs',
   };
 
   try {
@@ -55,6 +55,7 @@ async function fetchPlayerData(player) {
 // Функция для проверки игроков
 async function checkPlayers() {
   const playersWithoutKey10 = [];
+  const playersWithoutKey10PreviousWeek = [];
 
   for (const player of players) {
     const data = await fetchPlayerData(player);
@@ -64,16 +65,28 @@ async function checkPlayers() {
       continue;
     }
 
+    if (!data || !data.mythic_plus_previous_weekly_highest_level_runs) {
+      playersWithoutKey10PreviousWeek.push(player.name);
+      continue;
+    }
+
     const hasKey10 = data.mythic_plus_weekly_highest_level_runs.some(
+      (run) => run.mythic_level >= 10
+    );
+    const hasKey10PreviousWeek = data.mythic_plus_previous_weekly_highest_level_runs.some(
       (run) => run.mythic_level >= 10
     );
 
     if (!hasKey10) {
       playersWithoutKey10.push(player.name);
     }
+
+    if (!hasKey10PreviousWeek) {
+      playersWithoutKey10PreviousWeek.push(player.name);
+    }
   }
 
-  return playersWithoutKey10;
+  return {playersWithoutKey10, playersWithoutKey10PreviousWeek};
 }
 
 // Слушаем события
@@ -87,12 +100,12 @@ client.on('messageCreate', async (message) => {
 
   await message.channel.send('Проверяю данные...');
 
-  const playersWithoutKey10 = await checkPlayers();
+  const {playersWithoutKey10, playersWithoutKey10PreviousWeek} = await checkPlayers();
 
-  if (playersWithoutKey10.length === 0) {
+  if (playersWithoutKey10.length === 0 && playersWithoutKey10PreviousWeek === 0) {
     message.channel.send('Все игроки закрыли хотя бы один 10-й ключ!');
   } else {
-    message.channel.send(`10 ключ не закрыли: ${playersWithoutKey10.join(', ')}`);
+    message.channel.send(`10 ключ не закрыли: ${playersWithoutKey10.join(', ')}\n10 ключ на предыдущей неделе не закрыли: ${playersWithoutKey10PreviousWeek.join(', ')}`);
   }
 });
 
