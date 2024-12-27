@@ -1,15 +1,9 @@
 import axios from "axios";
-import { Client, GatewayIntentBits } from "discord.js";
-import { getDiscordToken } from "./utils/credential.js";
+import { commandExecutor } from "./commands/index.js";
+import { startDiscordBackgroundWorker } from "./discrod/index.js";
+import { State } from "./store/index.js";
 
 // Настройки бота
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-});
 
 // Функция для получения данных о игроке
 async function fetchPlayerData(player) {
@@ -36,7 +30,7 @@ async function checkPlayers() {
   const playersWithoutKey10 = [];
   const playersWithoutKey10PreviousWeek = [];
 
-  for (const player of getSubscribers()) {
+  for (const player of State.subscribes.getSubscribers()) {
     const data = await fetchPlayerData(player);
 
     if (!data || !data.mythic_plus_weekly_highest_level_runs) {
@@ -69,35 +63,11 @@ async function checkPlayers() {
   return { playersWithoutKey10, playersWithoutKey10PreviousWeek };
 }
 
-// Слушаем события
-client.on("ready", () => {
-  console.log(`Background worker started like ${client.user.tag}`);
-});
-
-client.on("messageCreate", async (message) => {
-  // Если сообщение от бота или не содержит команду !keys, пропускаем
-  if (message.author.bot || message.content !== "!keys") return;
-
-  await message.channel.send("Перевірка інформації...");
-
-  const { playersWithoutKey10, playersWithoutKey10PreviousWeek } =
-    await checkPlayers();
-
-  if (
-    playersWithoutKey10.length === 0 &&
-    playersWithoutKey10PreviousWeek === 0
-  ) {
-    message.channel.send("Все игроки закрыли хотя бы один 10-й ключ!");
-  } else {
-    message.channel.send(
-      `10 ключ не закрыли: ${playersWithoutKey10.join(
-        ", "
-      )}\n10 ключ на предыдущей неделе не закрыли: ${playersWithoutKey10PreviousWeek.join(
-        ", "
-      )}`
-    );
-  }
-});
-
-// Запуск бота
-client.login(getDiscordToken());
+(async () => {
+  await startDiscordBackgroundWorker({
+    onStart: (client) => {
+      console.info(`Background worker started like ${client.user.tag}`);
+    },
+    onCommand: commandExecutor,
+  });
+})();
