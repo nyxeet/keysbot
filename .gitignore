@@ -1,2 +1,18 @@
 node_modules
 .env
+
+# tokens
+credential.json
+
+# yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# npm debug log files
+npm-debug.log*
+package-lock.json
