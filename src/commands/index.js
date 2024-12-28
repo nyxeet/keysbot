@@ -35,6 +35,7 @@ export const commandExecutor = async (interaction) => {
         await interaction.reply(`Unknown command: ${interaction.commandName}`);
     }
   } catch (error) {
+    console.error(error);
     await interaction.reply(
       `Execute command "${interaction.commandName}" panic with error ${String(
         error

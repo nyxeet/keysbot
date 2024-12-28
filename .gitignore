@@ -1,7 +1,10 @@
+# Nodejs 
 node_modules
+
+# Environment
 .env
 
-# tokens
+# Tokens
 credential.json
 
 # yarn
@@ -15,7 +18,6 @@ credential.json
 
 # npm debug log files
 npm-debug.log*
-package-lock.json
 
-#IDEs
+# IDEs
 .vscode
