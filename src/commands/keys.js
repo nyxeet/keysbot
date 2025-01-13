@@ -1,25 +1,26 @@
 import { EmbedBuilder } from "@discordjs/builders";
 import axios from "axios";
-import { State } from "../store/index.js";
+import { DataBase } from "../store/index.js";
 import { sortStringsAlphabetically } from "../utils/sorts.js";
 
-const URL = `https://raider.io/api/v1/characters/profile`;
-
-const fetchInformationFromRaiderIoByPlayer = async ({
+export const fetchInformationFromRaiderIoByPlayer = async ({
   name,
   realm,
   region,
 }) => {
   try {
-    const response = await axios.get(URL, {
-      params: {
-        region,
-        realm,
-        name,
-        fields:
-          "mythic_plus_weekly_highest_level_runs,mythic_plus_previous_weekly_highest_level_runs",
-      },
-    });
+    const response = await axios.get(
+      `https://raider.io/api/v1/characters/profile`,
+      {
+        params: {
+          region,
+          realm,
+          name,
+          fields:
+            "mythic_plus_weekly_highest_level_runs,mythic_plus_previous_weekly_highest_level_runs",
+        },
+      }
+    );
     const data = response.data;
 
     return {
@@ -29,6 +30,7 @@ const fetchInformationFromRaiderIoByPlayer = async ({
       ),
     };
   } catch (error) {
+    console.error(error);
     return {
       name,
       error: `Не можу отримати інформацію з raider.io.`,
@@ -37,8 +39,7 @@ const fetchInformationFromRaiderIoByPlayer = async ({
 };
 
 export const keys = async () => {
-  const subscribes = State.subscribes.getSubscribers();
-  const promisesStack = subscribes.map((player) =>
+  const promisesStack = DataBase.data.characters.map((player) =>
     fetchInformationFromRaiderIoByPlayer(player)
   );
 
@@ -124,7 +125,9 @@ export const keys = async () => {
         },
         {
           name: "Помилка",
-          value: inprogressKeysPlayers.map(({ error }) => error).join("\n"),
+          value: inprogressKeysPlayers
+            .map(({ error }) => String(error))
+            .join("\n"),
           inline: true,
         }
       );

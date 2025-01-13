@@ -1,5 +1,5 @@
 {
-  "players": [
+  "characters": [
     { "region": "eu", "realm": "Silvermoon", "name": "Obezbashen" },
     { "region": "eu", "realm": "Gordunni", "name": "Камнеруд" },
     { "region": "eu", "realm": "Fordragon", "name": "Варимас" },
