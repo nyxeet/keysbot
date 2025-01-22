@@ -39,3 +39,12 @@ export const startDiscordBackgroundWorker = async ({
 };
 
 DISCORD_CLIENT.login(TOKEN);
+
+export const sendMessageToDiscord = async (channelId, message) => {
+  const channel = await DISCORD_CLIENT.channels.fetch(channelId);
+  if (channel) {
+    channel.send(message);
+  } else {
+    console.error("Channel not found");
+  }
+};

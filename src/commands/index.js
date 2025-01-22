@@ -46,8 +46,6 @@ export const commandExecutor = async (interaction) => {
 
   const commandName = interaction.commandName || customCommand;
 
-  // console.log("interaction: ", interaction);
-
   try {
     switch (commandName) {
       case COMMANDS.keys:
