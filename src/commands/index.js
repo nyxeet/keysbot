@@ -49,10 +49,12 @@ export const commandExecutor = async (interaction) => {
   try {
     switch (commandName) {
       case COMMANDS.keys:
-        await interaction.reply(await keys());
+        await interaction.deferReply();
+        await interaction.editReply(await keys());
         break;
       case COMMANDS.list:
-        await interaction.reply(await list());
+        await interaction.deferReply();
+        await interaction.editReply(await list());
         break;
       case COMMANDS.subscribe:
       case SUBSCRIBE_REGION_SETTED:
