@@ -62,7 +62,7 @@ export const keys = async () => {
     } else {
       inprogressKeysPlayers.push({
         playerName,
-        keys: `${currentWeekKeys.length} / 8`,
+        keys: currentWeekKeys.length,
       });
     }
   }
@@ -76,8 +76,7 @@ export const keys = async () => {
       sortStringsAlphabetically(playerName, nextPlayerName)
   );
   inprogressKeysPlayers = inprogressKeysPlayers.sort(
-    ({ playerName }, { playerName: nextPlayerName }) =>
-      sortStringsAlphabetically(playerName, nextPlayerName)
+    ({ keys }, { keys: nextKey }) => nextKey - keys
   );
 
   const closedKeysTable =
@@ -106,7 +105,9 @@ export const keys = async () => {
         },
         {
           name: "Прогрес",
-          value: inprogressKeysPlayers.map(({ keys }) => keys).join("\n"),
+          value: inprogressKeysPlayers
+            .map(({ keys }) => `${keys} / 8`)
+            .join("\n"),
           inline: true,
         }
       );
