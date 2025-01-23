@@ -1,11 +1,12 @@
 import { commandExecutor } from "./commands/index.js";
-import { startDiscordBackgroundWorker } from "./discrod/index.js";
+import { startDiscordBackgroundWorker } from "./discord/index.js";
 import { registerJobs } from "./jobs/index.js";
 
 (async () => {
-  registerJobs();
   await startDiscordBackgroundWorker({
-    onStart: (client) => {
+    onStart: async (client) => {
+      registerJobs();
+
       console.info(`Background worker started like ${client.user.tag}`);
     },
     onCommand: commandExecutor,
