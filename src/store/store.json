@@ -1,104 +1,124 @@
 {
   "characters": [
     {
-      "region": "eu",
+      "name": "Obezbashen",
       "realm": "Silvermoon",
-      "name": "Obezbashen"
+      "region": "eu",
+      "rating": 3264.4
     },
     {
-      "region": "eu",
+      "name": "Камнеруд",
       "realm": "Gordunni",
-      "name": "Камнеруд"
+      "region": "eu",
+      "rating": 2427.5
     },
     {
-      "region": "eu",
+      "name": "Варимас",
       "realm": "Fordragon",
-      "name": "Варимас"
+      "region": "eu",
+      "rating": 2547.4
     },
     {
-      "region": "eu",
+      "name": "Maleficee",
       "realm": "Turalyon",
-      "name": "Maleficee"
+      "region": "eu",
+      "rating": 2686.8
     },
     {
-      "region": "eu",
+      "name": "Пипкабупка",
       "realm": "Gordunni",
-      "name": "Пипкабупка"
+      "region": "eu",
+      "rating": 2866.1
     },
     {
-      "region": "eu",
+      "name": "Роготбога",
       "realm": "Gordunni",
-      "name": "Роготбога"
+      "region": "eu",
+      "rating": 2666.6
     },
     {
-      "region": "eu",
+      "name": "Бокетра",
       "realm": "Gordunni",
-      "name": "Бокетра"
+      "region": "eu",
+      "rating": 2661.5
     },
     {
-      "region": "eu",
+      "name": "Самураши",
       "realm": "Gordunni",
-      "name": "Самураши"
+      "region": "eu",
+      "rating": 2337.9
     },
     {
-      "region": "eu",
+      "name": "Shelbis",
       "realm": "TarrenMill",
-      "name": "Shelbis"
+      "region": "eu",
+      "rating": 3207.4
     },
     {
-      "region": "eu",
+      "name": "Минайра",
       "realm": "Blackscar",
-      "name": "Минайра"
+      "region": "eu",
+      "rating": 2518.7
     },
     {
-      "region": "eu",
+      "name": "Юлисана",
       "realm": "Gordunni",
-      "name": "Юлисана"
+      "region": "eu",
+      "rating": 2672.1
     },
     {
-      "region": "eu",
+      "name": "Эрвиртур",
       "realm": "Gordunni",
-      "name": "Эрвиртур"
+      "region": "eu",
+      "rating": 2672
     },
     {
-      "region": "eu",
+      "name": "Nyma",
       "realm": "Silvermoon",
-      "name": "Nyma"
+      "region": "eu",
+      "rating": 3008.6
     },
     {
-      "region": "eu",
+      "name": "Озаарённая",
       "realm": "Gordunni",
-      "name": "Озаарённая"
+      "region": "eu",
+      "rating": 2589.4
     },
     {
-      "region": "eu",
+      "name": "Архитас",
       "realm": "Gordunni",
-      "name": "Архитас"
+      "region": "eu",
+      "rating": 3155.9
     },
     {
-      "region": "eu",
+      "name": "Джусихилл",
       "realm": "Eversong",
-      "name": "Джусихилл"
+      "region": "eu",
+      "rating": 3052.4
     },
     {
-      "region": "eu",
+      "name": "Ватканаранку",
       "realm": "Gordunni",
-      "name": "Ватканаранку"
+      "region": "eu",
+      "rating": 3017
     },
     {
       "name": "Kroop",
       "realm": "Silvermoon",
-      "region": "eu"
+      "region": "eu",
+      "rating": 2921.1
     },
     {
       "name": "Ttl",
       "realm": "Tarren Mill",
-      "region": "eu"
+      "region": "eu",
+      "rating": 2722.5
     },
     {
       "name": "Коломический",
       "realm": "Eversong",
-      "region": "eu"
+      "region": "eu",
+      "rating": 3225.8
     }
   ]
 }
