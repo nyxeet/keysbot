@@ -77,8 +77,7 @@ export const keys = async () => {
       sortStringsAlphabetically(playerName, nextPlayerName)
   );
   closedKeysPlayers = closedKeysPlayers.sort(
-    ({ playerName }, { playerName: nextPlayerName }) =>
-      sortStringsAlphabetically(playerName, nextPlayerName)
+    ({ rating }, { rating: nextRating }) => nextRating - rating
   );
   inprogressKeysPlayers = inprogressKeysPlayers.sort(
     ({ keys }, { keys: nextKey }) => nextKey - keys
