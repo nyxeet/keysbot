@@ -3,6 +3,9 @@ import axios from "axios";
 import { DataBase } from "../store/index.js";
 import { sortStringsAlphabetically } from "../utils/sorts.js";
 
+const MINIMUM_KEY_LEVEL = 10;
+const REQUIRED_KEY_COUNT = 1;
+
 export const fetchInformationFromRaiderIoByPlayer = async ({
   name,
   realm,
@@ -28,7 +31,7 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
       name,
       rating,
       currentWeekKeys: data.mythic_plus_weekly_highest_level_runs.filter(
-        ({ mythic_level }) => mythic_level >= 10
+        ({ mythic_level }) => mythic_level >= MINIMUM_KEY_LEVEL
       ),
     };
   } catch (error) {
@@ -59,8 +62,8 @@ export const keys = async () => {
       continue;
     }
 
-    if (currentWeekKeys.length >= 1) {
-      closedKeysPlayers.push({ playerName });
+    if (currentWeekKeys.length >= REQUIRED_KEY_COUNT) {
+      closedKeysPlayers.push({ playerName, rating });
     } else {
       inprogressKeysPlayers.push({
         playerName,
@@ -119,7 +122,7 @@ export const keys = async () => {
         {
           name: "Прогрес",
           value: inprogressKeysPlayers
-            .map(({ keys }) => `${keys} / 8`)
+            .map(({ keys }) => `${keys} / ${REQUIRED_KEY_COUNT}`)
             .join("\n"),
           inline: true,
         }
