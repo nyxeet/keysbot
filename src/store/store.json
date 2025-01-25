@@ -88,7 +88,7 @@
       "name": "Архитас",
       "realm": "Gordunni",
       "region": "eu",
-      "rating": 3155.9
+      "rating": 3168.7
     },
     {
       "name": "Джусихилл",
@@ -119,6 +119,18 @@
       "realm": "Eversong",
       "region": "eu",
       "rating": 3225.8
+    },
+    {
+      "name": "Ptichemoloko",
+      "realm": "Silvermoon",
+      "region": "eu",
+      "rating": 3234.3
+    },
+    {
+      "name": "Эйсвнатуре",
+      "realm": "Гордунни",
+      "region": "eu",
+      "rating": 3238.8
     }
   ]
 }
