@@ -7,6 +7,7 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
   name,
   realm,
   region,
+  rating,
 }) => {
   try {
     const response = await axios.get(
@@ -25,6 +26,7 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
 
     return {
       name,
+      rating,
       currentWeekKeys: data.mythic_plus_weekly_highest_level_runs.filter(
         ({ mythic_level }) => mythic_level >= 10
       ),
@@ -50,14 +52,14 @@ export const keys = async () => {
   let inprogressKeysPlayers = [];
 
   for (const player of results) {
-    const { name: playerName, currentWeekKeys, error } = player;
+    const { name: playerName, rating, currentWeekKeys, error } = player;
 
     if (error) {
       playersWithError.push({ playerName, error });
       continue;
     }
 
-    if (currentWeekKeys.length >= 8) {
+    if (currentWeekKeys.length >= 1) {
       closedKeysPlayers.push({ playerName });
     } else {
       inprogressKeysPlayers.push({
@@ -84,11 +86,22 @@ export const keys = async () => {
     new EmbedBuilder()
       .setColor(0x0099ff)
       .setTitle(`Закрили – і молодці (${closedKeysPlayers.length})`)
-      .addFields({
-        name: "Нікнейм",
-        value: closedKeysPlayers.map(({ playerName }) => playerName).join("\n"),
-        inline: true,
-      });
+      .addFields(
+        {
+          name: "Нікнейм",
+          value: closedKeysPlayers
+            .map(({ playerName }) => playerName)
+            .join("\n"),
+          inline: true,
+        },
+        {
+          name: "Рейтинг",
+          value: closedKeysPlayers
+            .map(({ rating }) => rating || "немає даних")
+            .join("\n"),
+          inline: true,
+        }
+      );
 
   const inprogressKeysTable =
     inprogressKeysPlayers.length > 0 &&

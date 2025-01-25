@@ -9,7 +9,7 @@ const TOKEN = getDiscordToken();
 
 /** Guliapole id */
 export const DISCORD_SERVER_ID = "1160185443430703145";
-export const CHANNEL_ID = "1237024576316117003";
+export const CHANNEL_ID = "1332787596513771580";
 /** test */
 // export const DISCORD_SERVER_ID = "1322148736658440243";
 // export const CHANNEL_ID = "1322148737170280522";
