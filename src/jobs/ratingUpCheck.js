@@ -79,7 +79,7 @@ export const ratingUpCheck = new CronJob(
             .map(
               ({ name, oldRating, newRating }) =>
                 `${name}: ~~${oldRating}~~ -> ${newRating} (**+${
-                  newRating - oldRating
+                  Math.round((newRating - oldRating) * 10) / 10
                 }**)`
             )
             .join("\n"),
