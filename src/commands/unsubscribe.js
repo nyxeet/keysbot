@@ -16,9 +16,10 @@ export const unsubscribe = async (interaction) => {
     case SUBSCRIBE_NAME_SETTED: {
       const character = interaction.fields.getTextInputValue('character');
 
-      const characterExists = await dao
-        .listCharacters()
-        .find((value) => value.name === character);
+      const characters = await dao.listCharacters();
+      const characterExists = characters.find(
+        (value) => value.name === character
+      );
 
       if (characterExists) {
         await dao.removeCharacter(character);

@@ -64,7 +64,11 @@ export const keys = async () => {
     }
 
     if (currentWeekKeys.length >= REQUIRED_KEY_COUNT) {
-      closedKeysPlayers.push({ playerName, rating });
+      closedKeysPlayers.push({
+        playerName,
+        rating,
+        currentWeekKeysLength: currentWeekKeys.length,
+      });
     } else {
       inprogressKeysPlayers.push({
         playerName,
@@ -101,6 +105,16 @@ export const keys = async () => {
           name: 'Рейтинг',
           value: closedKeysPlayers
             .map(({ rating }) => rating || 'немає даних')
+            .join('\n'),
+          inline: true,
+        },
+        {
+          name: 'Закрито',
+          value: closedKeysPlayers
+            .map(
+              ({ currentWeekKeysLength }) =>
+                `${currentWeekKeysLength} / ${REQUIRED_KEY_COUNT}`
+            )
             .join('\n'),
           inline: true,
         }

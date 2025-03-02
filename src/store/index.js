@@ -1,6 +1,4 @@
 import { mongoConnect } from './mongoConnector.js';
-import fs from 'fs/promises';
-import { fetchInformationFromRaiderIoByPlayer } from '../commands/keys.js';
 
 let charactersCollection;
 
