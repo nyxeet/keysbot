@@ -1,8 +1,8 @@
-import { EmbedBuilder } from "@discordjs/builders";
-import axios from "axios";
-import { CronJob } from "cron";
-import { CHANNEL_ID, getChannelByDiscordById } from "../discord/index.js";
-import { DataBase, updateCharacterInformation } from "../store/index.js";
+import { EmbedBuilder } from '@discordjs/builders';
+import axios from 'axios';
+import { CronJob } from 'cron';
+import { CHANNEL_ID, getChannelByDiscordById } from '../discord/index.js';
+import dao from '../store/index.js';
 
 const fetchInformationFromRaiderIoByPlayer = async ({
   name,
@@ -17,7 +17,7 @@ const fetchInformationFromRaiderIoByPlayer = async ({
           region,
           realm,
           name,
-          fields: "mythic_plus_scores_by_season:current",
+          fields: 'mythic_plus_scores_by_season:current',
         },
       }
     );
@@ -37,10 +37,11 @@ const fetchInformationFromRaiderIoByPlayer = async ({
 };
 
 export const ratingUpCheck = new CronJob(
-  "0 9-21/3 * * *",
+  '0 9-21/3 * * *',
   async () => {
     const channel = await getChannelByDiscordById(CHANNEL_ID);
-    const promisesStack = DataBase.data.characters.map((player) =>
+    const chatacters = await dao.listCharacters();
+    const promisesStack = chatacters.map((player) =>
       fetchInformationFromRaiderIoByPlayer(player)
     );
     let charactersThatIncreasedTheirRating = [];
@@ -48,9 +49,8 @@ export const ratingUpCheck = new CronJob(
 
     for (const player of results) {
       const { name, rating, error } = player;
-      const character = DataBase.data.characters.find(
-        (char) => char.name === name
-      );
+      const characters = await dao.listCharacters();
+      const character = characters.find((char) => char.name === name);
 
       if (error) continue;
 
@@ -62,15 +62,15 @@ export const ratingUpCheck = new CronJob(
         });
       }
 
-      await updateCharacterInformation({ ...character, rating });
+      await dao.updateCharacterInformation({ ...character, rating });
     }
 
     if (charactersThatIncreasedTheirRating.length > 0) {
       const charactersThatIncreasedTheirRatingTable = new EmbedBuilder()
         .setColor(0x457b9d)
-        .setTitle("Підвищили свій рейтинг")
+        .setTitle('Підвищили свій рейтинг')
         .addFields({
-          name: ":heart_eyes_cat:",
+          name: ':heart_eyes_cat:',
           value: charactersThatIncreasedTheirRating
             .sort(
               (character, nextCharacter) =>
@@ -82,7 +82,7 @@ export const ratingUpCheck = new CronJob(
                   Math.round((newRating - oldRating) * 10) / 10
                 }**)`
             )
-            .join("\n"),
+            .join('\n'),
           inline: true,
         });
 
@@ -93,5 +93,5 @@ export const ratingUpCheck = new CronJob(
   },
   null,
   false,
-  "Europe/Kiev"
+  'Europe/Kiev'
 );

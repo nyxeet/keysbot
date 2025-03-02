@@ -1,18 +1,20 @@
-import { keys } from "./keys.js";
-import { list } from "./list.js";
+import { keys } from './keys.js';
+import { list } from './list.js';
+import { migrateCharacters } from './migrateCharacters.js';
 import {
   subscribe,
   SUBSCRIBE_FINAL_MODAL_SETTED,
   SUBSCRIBE_REGION_SETTED,
-} from "./subscribe.js";
-import { SUBSCRIBE_NAME_SETTED, unsubscribe } from "./unsubscribe.js";
-import { parseId } from "./utils.js";
+} from './subscribe.js';
+import { SUBSCRIBE_NAME_SETTED, unsubscribe } from './unsubscribe.js';
+import { parseId } from './utils.js';
 
 const COMMANDS = {
-  keys: "keys",
-  list: "list",
-  subscribe: "subscribe",
-  unsubscribe: "unsubscribe",
+  keys: 'keys',
+  list: 'list',
+  subscribe: 'subscribe',
+  unsubscribe: 'unsubscribe',
+  migrate: 'migrate',
 };
 
 export const getCommandsForRegistration = () => {
@@ -32,6 +34,10 @@ export const getCommandsForRegistration = () => {
     {
       name: COMMANDS.unsubscribe,
       description: `Видаляє гравця, який був підписаний на закриття ключів`,
+    },
+    {
+      name: COMMANDS.migrate,
+      description: `Мігрує JSON`,
     },
   ];
 };
@@ -64,6 +70,11 @@ export const commandExecutor = async (interaction) => {
       case COMMANDS.unsubscribe:
       case SUBSCRIBE_NAME_SETTED:
         await unsubscribe(interaction);
+        break;
+      case COMMANDS.migrate:
+        await interaction.deferReply();
+        await migrateCharacters();
+        await interaction.editReply('Мігрувало');
         break;
       default:
         await interaction.reply(`Unknown command: ${interaction.commandName}`);

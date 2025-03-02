@@ -1,15 +1,15 @@
-import { Client, Events, GatewayIntentBits, REST, Routes } from "discord.js";
-import { getCommandsForRegistration } from "../commands/index.js";
+import { Client, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
+import { getCommandsForRegistration } from '../commands/index.js';
 import {
   getDiscordApplicationId,
   getDiscordToken,
-} from "../utils/credential.js";
+} from '../utils/credential.js';
 
 const TOKEN = getDiscordToken();
 
 /** Guliapole id */
-export const DISCORD_SERVER_ID = "1160185443430703145";
-export const CHANNEL_ID = "1332787596513771580";
+export const DISCORD_SERVER_ID = '1160185443430703145';
+export const CHANNEL_ID = '1332787596513771580';
 /** test */
 // export const DISCORD_SERVER_ID = "1322148736658440243";
 // export const CHANNEL_ID = "1322148737170280522";

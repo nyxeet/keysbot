@@ -1,4 +1,5 @@
 import fs from "fs";
+import "dotenv/config"
 
 const PATH_TO_CREDENTIAL = "credential.json";
 

@@ -1,7 +1,7 @@
-import { EmbedBuilder } from "@discordjs/builders";
-import axios from "axios";
-import { DataBase } from "../store/index.js";
-import { sortStringsAlphabetically } from "../utils/sorts.js";
+import { EmbedBuilder } from '@discordjs/builders';
+import axios from 'axios';
+import dao from '../store/index.js';
+import { sortStringsAlphabetically } from '../utils/sorts.js';
 
 const MINIMUM_KEY_LEVEL = 10;
 const REQUIRED_KEY_COUNT = 1;
@@ -21,7 +21,7 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
           realm,
           name,
           fields:
-            "mythic_plus_weekly_highest_level_runs,mythic_plus_previous_weekly_highest_level_runs",
+            'mythic_plus_weekly_highest_level_runs,mythic_plus_previous_weekly_highest_level_runs',
         },
       }
     );
@@ -29,7 +29,7 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
 
     return {
       name,
-      rating,
+      rating: rating || data.rating || 0,
       currentWeekKeys: data.mythic_plus_weekly_highest_level_runs.filter(
         ({ mythic_level }) => mythic_level >= MINIMUM_KEY_LEVEL
       ),
@@ -44,7 +44,8 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
 };
 
 export const keys = async () => {
-  const promisesStack = DataBase.data.characters.map((player) =>
+  const characters = await dao.listCharacters();
+  const promisesStack = characters.map((player) =>
     fetchInformationFromRaiderIoByPlayer(player)
   );
 
@@ -90,17 +91,17 @@ export const keys = async () => {
       .setTitle(`Закрили – і молодці (${closedKeysPlayers.length})`)
       .addFields(
         {
-          name: "Нікнейм",
+          name: 'Нікнейм',
           value: closedKeysPlayers
             .map(({ playerName }) => playerName)
-            .join("\n"),
+            .join('\n'),
           inline: true,
         },
         {
-          name: "Рейтинг",
+          name: 'Рейтинг',
           value: closedKeysPlayers
-            .map(({ rating }) => rating || "немає даних")
-            .join("\n"),
+            .map(({ rating }) => rating || 'немає даних')
+            .join('\n'),
           inline: true,
         }
       );
@@ -112,17 +113,17 @@ export const keys = async () => {
       .setTitle(`У прогресі (${inprogressKeysPlayers.length})`)
       .addFields(
         {
-          name: "Нікнейм",
+          name: 'Нікнейм',
           value: inprogressKeysPlayers
             .map(({ playerName }) => playerName)
-            .join("\n"),
+            .join('\n'),
           inline: true,
         },
         {
-          name: "Прогрес",
+          name: 'Прогрес',
           value: inprogressKeysPlayers
             .map(({ keys }) => `${keys} / ${REQUIRED_KEY_COUNT}`)
-            .join("\n"),
+            .join('\n'),
           inline: true,
         }
       );
@@ -130,20 +131,20 @@ export const keys = async () => {
     playersWithError.length > 0 &&
     new EmbedBuilder()
       .setColor(0xff1a00)
-      .setTitle("Невдалося завантажити інформацію")
+      .setTitle('Невдалося завантажити інформацію')
       .addFields(
         {
-          name: "Нікнейм",
+          name: 'Нікнейм',
           value: playersWithError
             .map(({ playerName }) => playerName)
-            .join("\n"),
+            .join('\n'),
           inline: true,
         },
         {
-          name: "Помилка",
+          name: 'Помилка',
           value: inprogressKeysPlayers
             .map(({ error }) => String(error))
-            .join("\n"),
+            .join('\n'),
           inline: true,
         }
       );
