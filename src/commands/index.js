@@ -1,4 +1,4 @@
-import { keys } from './keys.js';
+import { keys, prevWeekKeys } from './keys.js';
 import { list } from './list.js';
 import { migrateCharacters } from './migrateCharacters.js';
 import {
@@ -57,6 +57,10 @@ export const commandExecutor = async (interaction) => {
       case COMMANDS.keys:
         await interaction.deferReply();
         await interaction.editReply(await keys());
+        break;
+      case COMMANDS.prevWeekKeys:
+        await interaction.deferReply();
+        await interaction.editReply(await prevWeekKeys());
         break;
       case COMMANDS.list:
         await interaction.deferReply();
