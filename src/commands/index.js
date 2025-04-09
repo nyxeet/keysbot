@@ -25,6 +25,10 @@ export const getCommandsForRegistration = () => {
       description: `Перевіряє та повертає інформацію про статус ключів для підписаних гравців`,
     },
     {
+      name: COMMANDS.prevWeekKeys,
+      description: `Перевіряє та повертає інформацію про статус ключів минулого тижня для підписаних гравців`,
+    },
+    {
       name: COMMANDS.list,
       description: `Повертає список гравців, які підписані на закриття ключів`,
     },
