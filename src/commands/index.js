@@ -11,7 +11,7 @@ import { parseId } from './utils.js';
 
 const COMMANDS = {
   keys: 'keys',
-  prev: 'prev',
+  prev: 'prev_week_keys',
   list: 'list',
   subscribe: 'subscribe',
   unsubscribe: 'unsubscribe',
