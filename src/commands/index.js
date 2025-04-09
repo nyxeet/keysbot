@@ -11,7 +11,7 @@ import { parseId } from './utils.js';
 
 const COMMANDS = {
   keys: 'keys',
-  prevWeekKeys: 'prevWeekKeys',
+  prev: 'prev',
   list: 'list',
   subscribe: 'subscribe',
   unsubscribe: 'unsubscribe',
@@ -25,7 +25,7 @@ export const getCommandsForRegistration = () => {
       description: `Перевіряє та повертає інформацію про статус ключів для підписаних гравців`,
     },
     {
-      name: COMMANDS.prevWeekKeys,
+      name: COMMANDS.prev,
       description: `Перевіряє та повертає інформацію про статус ключів минулого тижня для підписаних гравців`,
     },
     {
@@ -63,7 +63,7 @@ export const commandExecutor = async (interaction) => {
         await interaction.deferReply();
         await interaction.editReply(await keys());
         break;
-      case COMMANDS.prevWeekKeys:
+      case COMMANDS.prev:
         await interaction.deferReply();
         await interaction.editReply(await prevWeekKeys());
         break;
