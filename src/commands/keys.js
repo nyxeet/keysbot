@@ -4,7 +4,8 @@ import dao from '../store/index.js';
 import { sortStringsAlphabetically } from '../utils/sorts.js';
 
 const MINIMUM_KEY_LEVEL = 10;
-const REQUIRED_KEY_COUNT = 8;
+const REQUIRED_KEY_COUNT = 4;
+const MIN_REQUIRED_KEY_COUNT = 1;
 
 export const fetchInformationFromRaiderIoByPlayer = async ({
   name,
@@ -31,9 +32,6 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
       name,
       rating: rating || data.rating || 0,
       currentWeekKeys: data.mythic_plus_weekly_highest_level_runs.filter(
-        ({ mythic_level }) => mythic_level >= MINIMUM_KEY_LEVEL
-      ),
-      prevWeekKeys: data.mythic_plus_previous_weekly_highest_level_runs.filter(
         ({ mythic_level }) => mythic_level >= MINIMUM_KEY_LEVEL
       ),
     };
@@ -195,7 +193,7 @@ export const prevWeekKeys = async () => {
       continue;
     }
 
-    if (prevWeekKeys.length >= REQUIRED_KEY_COUNT) {
+    if (prevWeekKeys.length >= MIN_REQUIRED_KEY_COUNT) {
       closedKeysPlayers.push({
         playerName,
         rating,
@@ -238,7 +236,7 @@ export const prevWeekKeys = async () => {
         {
           name: 'Прогрес',
           value: inprogressKeysPlayers
-            .map(({ keys }) => `${keys} / ${REQUIRED_KEY_COUNT}`)
+            .map(({ keys }) => `${keys} / ${MIN_REQUIRED_KEY_COUNT}`)
             .join('\n'),
           inline: true,
         }
