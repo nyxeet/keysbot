@@ -34,6 +34,9 @@ export const fetchInformationFromRaiderIoByPlayer = async ({
       currentWeekKeys: data.mythic_plus_weekly_highest_level_runs.filter(
         ({ mythic_level }) => mythic_level >= MINIMUM_KEY_LEVEL
       ),
+      prevWeekKeys: data.mythic_plus_previous_weekly_highest_level_runs.filter(
+        ({ mythic_level }) => mythic_level >= MINIMUM_KEY_LEVEL
+      ),
     };
   } catch (error) {
     console.error(error);
